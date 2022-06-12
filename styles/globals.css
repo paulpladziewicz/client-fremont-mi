@@ -1,0 +1,16 @@
+* {
+    font-size: '16px';
+    font-family: Inter, sans-serif;
+    color: #1f2937
+}
+
+body {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.p-large {
+    font-size: 1.75rem;
+    line-height: 1.5;
+}
