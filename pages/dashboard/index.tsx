@@ -5,7 +5,6 @@ import {
   Layout,
   ProfileDashboardDisplay
 } from 'components';
-import { useAuth } from 'hooks/auth';
 
 const Dashboard: NextPage = () => {
   return (
@@ -17,7 +16,7 @@ const Dashboard: NextPage = () => {
 
       <hr className='mb-3'></hr>
 
-      <ProfileDashboardDisplay />
+      {/*<ProfileDashboardDisplay />*/}
 
       <div className='mb-8'></div>
 

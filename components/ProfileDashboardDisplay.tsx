@@ -3,37 +3,35 @@ import useSWR from 'swr';
 import { API_ROUTES } from '../constants/apiRoutes';
 import axios from '../lib/axios';
 import { getS3ImageURL } from '../utils';
-import { useAuth } from 'hooks/auth';
 
 export const ProfileDashboardDisplay: React.FC = () => {
-  const { user } = useAuth({ middleware: 'auth' });
-  const { data: profile, mutate } = useSWR(
-    `${API_ROUTES.PEOPLE}/${user?.id}`,
-    () =>
-      axios
-        .get(`${API_ROUTES.PEOPLE}/${user?.id}`)
-        .then((res) => res.data)
-        .catch((error) => {
-          console.log(error);
-        })
-  );
+  // const { data: profile, mutate } = useSWR(
+  //   `${API_ROUTES.PEOPLE}/${user?.id}`,
+  //   () =>
+  //     axios
+  //       .get(`${API_ROUTES.PEOPLE}/${user?.id}`)
+  //       .then((res) => res.data)
+  //       .catch((error) => {
+  //         console.log(error);
+  //       })
+  // );
 
-  const handlePublish = async () => {
-    await axios.patch(`${API_ROUTES.PUBLISH}/${user?.id}`, {
-      published: !profile.published
-    });
-    await mutate({ ...profile, published: !profile.published });
-  };
-
-  const renderPublishButton = () => {
-    if (profile?.published) {
-      return <Button onClick={handlePublish} text='Unpublish' />;
-    }
-
-    return <Button onClick={handlePublish} text='Publish' />;
-  };
-
-  const S3_IMAGE_URL = getS3ImageURL(profile?.s3_image_url);
+  // const handlePublish = async () => {
+  //   await axios.patch(`${API_ROUTES.PUBLISH}/${user?.id}`, {
+  //     published: !profile.published
+  //   });
+  //   await mutate({ ...profile, published: !profile.published });
+  // };
+  //
+  // const renderPublishButton = () => {
+  //   if (profile?.published) {
+  //     return <Button onClick={handlePublish} text='Unpublish' />;
+  //   }
+  //
+  //   return <Button onClick={handlePublish} text='Publish' />;
+  // };
+  //
+  // const S3_IMAGE_URL = getS3ImageURL(profile?.s3_image_url);
 
   return (
     <div className='border border-gray-400 p-4 rounded-2xl'>

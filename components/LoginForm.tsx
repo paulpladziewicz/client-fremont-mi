@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import { Logo, Input, Button } from 'components';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { CenteredDiv } from 'components/CenteredDiv';
-import { useAuth } from 'hooks/auth';
+import axios from 'axios';
+import { login } from 'redux-toolkit/features/userSlice';
+import { useAppDispatch, useAppSelector } from 'redux-toolkit/hooks';
+import { useRouter } from 'next/router';
+import { getErrorMessage } from '../utils';
+import { setPageLevelMessage } from '../redux-toolkit/features/errorMessageSlice';
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -13,19 +19,39 @@ const validationSchema = yup.object().shape({
 });
 
 export const LoginForm: React.FC = () => {
-  const { login } = useAuth();
+  const dispatch = useAppDispatch();
+  const [pageLevelMessage, setPageLevelMessage] = useState('');
+  const router = useRouter();
+
+  const renderPageLevelMessage = () => {
+    if (!pageLevelMessage) return null;
+
+    return (
+      <div className='bg-indigo-700 p-4 mb-4 rounded-lg'>
+        <p className='text-white'>{pageLevelMessage}</p>
+      </div>
+    );
+  };
 
   return (
     <CenteredDiv>
       <div style={{ width: '300px' }}>
         <Logo className='mb-4 text-center' size='2.5rem' />
+        {renderPageLevelMessage()}
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
-          onSubmit={(data, { setSubmitting }) => {
+          onSubmit={async (data, { setSubmitting }) => {
             setSubmitting(true);
-            const { email, password } = data;
-            login({ email, password });
+            try {
+              const res = await axios.post('http://localhost:4000/login', data);
+              dispatch(login(res.data.user));
+              localStorage.setItem('token', res.data.token);
+              await router.push('/dashboard');
+            } catch (e: any) {
+              console.log(e.message);
+              setPageLevelMessage(getErrorMessage(e.message));
+            }
           }}
         >
           {({
