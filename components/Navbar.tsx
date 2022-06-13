@@ -1,17 +1,25 @@
 import styles from 'styles/Navbar.module.css';
 import { Button, ButtonLink, Logo } from 'components';
 import Link from 'next/link';
-import { useAuth } from 'hooks/auth';
+import { useRouter } from 'next/router';
+import { logout } from 'redux-toolkit/features/userSlice';
+import { useAppDispatch, useAppSelector } from 'redux-toolkit/hooks';
 
-export const Navbar: React.FC = ({ user }) => {
-  const { logout } = useAuth();
+export const Navbar: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { isLoggedIn } = useAppSelector((state) => state.user);
 
+  const handleLogout = async () => {
+    await dispatch(logout());
+    await router.push('/');
+  };
   const renderAuthButtons = () => {
-    if (user?.id) {
+    if (isLoggedIn) {
       return (
         <>
           <ButtonLink href='/dashboard' text='Dashboard' className='mr-2' />
-          <Button onClick={logout} text='Logout' />
+          <Button onClick={handleLogout} text='Logout' />
         </>
       );
     } else {
@@ -23,6 +31,7 @@ export const Navbar: React.FC = ({ user }) => {
       );
     }
   };
+
   return (
     <nav className={styles.nav}>
       <Link href='/'>

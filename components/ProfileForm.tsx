@@ -5,11 +5,9 @@ import axios from 'lib/axios';
 import { API_ROUTES } from 'constants/apiRoutes';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { useAuth } from '../hooks/auth';
 
 export const ProfileForm: React.FC = () => {
   const router = useRouter();
-  const { user } = useAuth();
 
   const { data: profile, mutate } = useSWR(
     `${API_ROUTES.PEOPLE}/${user?.id}`,

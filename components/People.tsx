@@ -1,26 +1,21 @@
-import useSWR from 'swr';
-import axios from 'lib/axios';
-import { API_ROUTES } from 'constants/apiRoutes';
 import { ProfileCard } from 'components';
+import { usePeopleQuery } from 'redux-toolkit/services/peopleApi';
 
 interface Props {
   className?: string;
 }
 
-export const People: React.FC<Props> = () => {
-  const { data: people } = useSWR(API_ROUTES.PEOPLE, () =>
-    axios
-      .get(API_ROUTES.PEOPLE)
-      .then((res) => res.data)
-      .catch((error) => {
-        console.log(error);
-      })
-  );
+interface IPerson {
+  user_id: number;
+}
 
-  const content = people ? (
+export const People: React.FC<Props> = () => {
+  const { data, error, isLoading } = usePeopleQuery();
+
+  const content = data ? (
     <div className='flex flex-wrap'>
-      {people.map((person) => (
-        <ProfileCard key={person.id} person={person} />
+      {data.profiles.map((person: IPerson) => (
+        <ProfileCard key={person.user_id} person={person} />
       ))}
     </div>
   ) : (
