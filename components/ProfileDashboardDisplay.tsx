@@ -3,19 +3,15 @@ import useSWR from 'swr';
 import { API_ROUTES } from '../constants/apiRoutes';
 import axios from '../lib/axios';
 import { getS3ImageURL } from '../utils';
+import { useGetProfileQuery } from 'redux-toolkit/services/peopleApi';
+import { useAppSelector } from '../redux-toolkit/hooks';
+import { useRouter } from 'next/router';
 
-export const ProfileDashboardDisplay: React.FC = () => {
-  // const { data: profile, mutate } = useSWR(
-  //   `${API_ROUTES.PEOPLE}/${user?.id}`,
-  //   () =>
-  //     axios
-  //       .get(`${API_ROUTES.PEOPLE}/${user?.id}`)
-  //       .then((res) => res.data)
-  //       .catch((error) => {
-  //         console.log(error);
-  //       })
-  // );
-
+export const ProfileDashboardDisplay: React.FC = ({ data: profile }) => {
+  // const user = useAppSelector(state => state.user);
+  // if (user.user.userId) {
+  //   const { data: profile, error, isLoading } = useGetProfileQuery(user.user.user_id);
+  // }
   // const handlePublish = async () => {
   //   await axios.patch(`${API_ROUTES.PUBLISH}/${user?.id}`, {
   //     published: !profile.published
@@ -45,7 +41,7 @@ export const ProfileDashboardDisplay: React.FC = () => {
         <div className='w-3/12'>
           <img
             className='mx-auto rounded-full w-40 mb-2'
-            src={S3_IMAGE_URL}
+            src={profile?.s3_image_pathname}
             alt='profile image of the user'
           />
         </div>

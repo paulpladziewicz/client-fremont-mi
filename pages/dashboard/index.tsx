@@ -5,8 +5,36 @@ import {
   Layout,
   ProfileDashboardDisplay
 } from 'components';
+import { useAppDispatch } from '../../redux-toolkit/hooks';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { API_ROUTES } from '../../constants/apiRoutes';
+import { login, logout } from '../../redux-toolkit/features/userSlice';
 
-const Dashboard: NextPage = () => {
+const Dashboard: NextPage = ({ data: person }) => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    axios
+      .get(API_ROUTES.USER, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        dispatch(login(res.data));
+      })
+      .catch(() => {
+        localStorage.removeItem('token');
+        dispatch(logout());
+        router.push('/login');
+      });
+  }, []);
+
   return (
     <Layout>
       <h1 className='mb-3 text-4xl font-semibold'>Dashboard</h1>
@@ -16,7 +44,7 @@ const Dashboard: NextPage = () => {
 
       <hr className='mb-3'></hr>
 
-      {/*<ProfileDashboardDisplay />*/}
+      <ProfileDashboardDisplay data={person} />
 
       <div className='mb-8'></div>
 
@@ -28,5 +56,23 @@ const Dashboard: NextPage = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      data: {
+        user_id: 4,
+        first_name: 'Paul',
+        last_name: 'Pladziewicz',
+        about: 'This is all I am about.',
+        s3_image_pathname: null,
+        facebook_url: null,
+        instagram_url: null,
+        twitter_url: null,
+        linkedin_url: null
+      }
+    }
+  };
+}
 
 export default Dashboard;

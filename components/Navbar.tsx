@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     await dispatch(logout());
+    localStorage.removeItem('token');
     await router.push('/');
   };
   const renderAuthButtons = () => {

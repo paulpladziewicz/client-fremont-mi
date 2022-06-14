@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
 import { Layout, People } from 'components';
+import axios from 'axios';
 
-const PeoplePage: NextPage = () => {
+const PeoplePage: NextPage = ({ people }) => {
   return (
     <Layout>
       <h1 className='mb-3 text-4xl font-semibold'>People</h1>
@@ -11,9 +12,21 @@ const PeoplePage: NextPage = () => {
 
       <hr className='mb-3'></hr>
 
-      <People />
+      <People data={people} />
     </Layout>
   );
 };
+
+export async function getStaticProps() {
+  const res = await axios.get('http://localhost:4000/people');
+  const people = res.data.profiles;
+
+  return {
+    props: {
+      people
+    },
+    revalidate: 60
+  };
+}
 
 export default PeoplePage;
