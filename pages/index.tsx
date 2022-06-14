@@ -18,9 +18,6 @@ const Home: NextPage = () => {
       <p className='text-center mx-auto max-w-4xl leading-relaxed tracking-wide bg-indigo-700 text-white font-bold p-8 text-4xl rounded-2xl'>
         Strengthening our local community by focusing 100% on Fremont.
       </p>
-
-      <p>Anyone can create a profile, event, or business listing.</p>
-      <p>As long as you can meet, gather, and serve Fremont, MI.</p>
     </Layout>
   );
 };

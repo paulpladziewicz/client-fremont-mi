@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
 import { Layout, Events } from 'components';
+import axios from 'axios';
 
-const EventsPage: NextPage = () => {
+const EventsPage: NextPage = ({ events }) => {
   return (
     <Layout>
       <h1 className='mb-3 text-4xl font-semibold'>Events</h1>
@@ -11,9 +12,21 @@ const EventsPage: NextPage = () => {
 
       <hr className='mb-3'></hr>
 
-      <Events />
+      <Events events={events} />
     </Layout>
   );
 };
+
+export async function getStaticProps() {
+  const res = await axios.get('http://localhost:4000/events');
+  const events = res.data.events;
+
+  return {
+    props: {
+      events
+    },
+    revalidate: 60
+  };
+}
 
 export default EventsPage;

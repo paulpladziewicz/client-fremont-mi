@@ -1,33 +1,13 @@
-import useSWR from 'swr';
-import axios from 'lib/axios';
-
 interface Props {
   className?: string;
 }
 
-export const Events: React.FC<Props> = () => {
-  const {
-    data: events,
-    error,
-    mutate
-  } = useSWR('/api/events', () =>
-    axios
-      .get('/api/events')
-      .then((res) => res.data)
-      .catch((error) => {
-        console.log(error);
-      })
-  );
-
-  const content = events ? (
-    <ul>
+export const Events: React.FC<Props> = ({ events }) => {
+  return (
+    <div>
       {events.map((event) => (
-        <li key={event.id}>{event.title}</li>
+        <li key={event.event_id}>{event.name}</li>
       ))}
-    </ul>
-  ) : (
-    <div>Loading...</div>
+    </div>
   );
-
-  return <div>{content}</div>;
 };

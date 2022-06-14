@@ -1,20 +1,27 @@
-import { useRouter } from 'next/router';
 import { Layout } from 'components';
-import { usePublicProfileQuery } from 'redux-toolkit/services/peopleApi';
+import axios from "axios";
 
-const PublicProfile = () => {
-  const router = useRouter();
-  const { personId } = router.query;
-  const { data, error, isLoading } = usePublicProfileQuery(personId);
-  console.log(data);
+const PublicProfile = ({ person }) => {
 
   const renderProfile = () => {
-    if (!data) return;
+    if (!person) return;
 
-    return <h1>{data.first_name}</h1>;
+    return <h1>{person.first_name}</h1>;
   };
 
   return <Layout>{renderProfile()}</Layout>;
 };
+
+export async function getServerSideProps(context) {
+  const { query: { personId } } = context;
+  const res = await axios.get(`http://localhost:4000/people/${personId}`);
+  const person = res.data;
+
+  return {
+    props: {
+      person
+    }
+  };
+}
 
 export default PublicProfile;

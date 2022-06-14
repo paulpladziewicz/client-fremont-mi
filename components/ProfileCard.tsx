@@ -1,4 +1,3 @@
-import borders from 'styles/borders.module.css';
 import { getS3ImageURL } from '../utils';
 import { SocialIcons } from './SocialIcons';
 import Link from 'next/link';
@@ -30,9 +29,6 @@ export const ProfileCard: React.FC<Props> = ({ className, person }) => {
 
             <p className='mb-2 text-slate-500 font-medium'>{person.about}</p>
           </div>
-
-          <h3 className='text-xl font-bold text-slate-800 mb-2'>Interests</h3>
-          <p className='text-indigo-700 font-medium'>{person.interests}</p>
         </div>
       </div>
     </Link>
