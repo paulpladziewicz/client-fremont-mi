@@ -5,15 +5,17 @@ import axios from 'lib/axios';
 import { API_ROUTES } from 'constants/apiRoutes';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import {useAppSelector} from "../redux-toolkit/hooks";
 
 export const ProfileForm: React.FC = () => {
   const router = useRouter();
+    const { user } = useAppSelector((state) => state.user);
 
   const { data: profile, mutate } = useSWR(
-    `${API_ROUTES.PEOPLE}/${user?.id}`,
+    `${API_ROUTES.PEOPLE}/${user?.user_id}`,
     () =>
       axios
-        .get(`${API_ROUTES.PEOPLE}/${user?.id}`)
+        .get(`${API_ROUTES.PEOPLE}/${user?.user_id}`)
         .then((res) => res.data)
         .catch((error) => {
           console.log(error);
@@ -26,13 +28,13 @@ export const ProfileForm: React.FC = () => {
     if (!file) return;
     formData.append('file', file);
     axios
-      .post('/api/people/image', formData, {
+      .post(API_ROUTES.PROFILE_IMAGE, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
       .then((res) => {
-        mutate({ ...profile, s3_image_url: res.data.s3_image_url });
+        mutate({ ...profile, s3_image_url: res.data.s3_image_pathname });
       });
   };
 
@@ -40,7 +42,6 @@ export const ProfileForm: React.FC = () => {
     first_name: yup.string().required('First name is required.'),
     last_name: yup.string().required('Last name is required.'),
     about: yup.string().required('About is required.'),
-    interests: yup.string().required('Interests is required.')
   });
 
   return (
@@ -52,24 +53,21 @@ export const ProfileForm: React.FC = () => {
             first_name: profile?.first_name || '',
             last_name: profile?.last_name || '',
             about: profile?.about || '',
-            interests: profile?.interests || ''
           }}
           validationSchema={validationSchema}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             axios
-              .put(`${API_ROUTES.PEOPLE}/${user?.id}`, {
-                user_id: user?.id,
+              .put(`${API_ROUTES.PEOPLE}/${user?.user_id}`, {
+                user_id: user?.user_id,
                 first_name: data.first_name,
                 last_name: data.last_name,
                 about: data.about,
-                interests: data.interests
               })
               .then(() => {
                 router.push('/dashboard');
               })
               .catch((err) => {
-                console.log(err);
                 setSubmitting(false);
               });
           }}
@@ -112,14 +110,6 @@ export const ProfileForm: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={errors.about}
-              />
-              <Input
-                name='interests'
-                label='Interests'
-                value={values.interests}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.interests}
               />
               <Button
                 type='submit'

@@ -33,7 +33,7 @@ const EditProfile: NextPage = () => {
   return (
     <Layout>
       <h1>Edit Profile</h1>
-      <ProfileForm profile={profile} />
+      <ProfileForm />
     </Layout>
   );
 };
