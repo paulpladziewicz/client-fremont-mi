@@ -1,3 +1,4 @@
+// @ts-ignore
 const getJWT = () => {
   let jwt: string | null = '';
 

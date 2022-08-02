@@ -12,28 +12,29 @@ import axios from 'axios';
 import { API_ROUTES } from '../../constants/apiRoutes';
 import { login, logout } from '../../redux-toolkit/features/userSlice';
 
+// @ts-ignore
 const Dashboard: NextPage = ({ data: person }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    axios
-      .get(API_ROUTES.USER, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((res) => {
-        dispatch(login(res.data));
-      })
-      .catch(() => {
-        localStorage.removeItem('token');
-        dispatch(logout());
-        router.push('/login');
-      });
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //
+  //   axios
+  //     .get(API_ROUTES.USER, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     })
+  //     .then((res) => {
+  //       dispatch(login(res.data));
+  //     })
+  //     .catch(() => {
+  //       localStorage.removeItem('token');
+  //       dispatch(logout());
+  //       router.push('/login');
+  //     });
+  // }, []);
 
   return (
     <Layout>

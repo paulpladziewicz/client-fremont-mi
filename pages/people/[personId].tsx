@@ -1,6 +1,7 @@
 import { Layout } from 'components';
 import axios from "axios";
 
+// @ts-ignore
 const PublicProfile = ({ person }) => {
 
   const renderProfile = () => {
@@ -12,16 +13,16 @@ const PublicProfile = ({ person }) => {
   return <Layout>{renderProfile()}</Layout>;
 };
 
-export async function getServerSideProps(context) {
-  const { query: { personId } } = context;
-  const res = await axios.get(`http://localhost:4000/people/${personId}`);
-  const person = res.data;
-
-  return {
-    props: {
-      person
-    }
-  };
-}
+// export async function getServerSideProps(context: { query: { personId: any; }; }) {
+//   const { query: { personId } } = context;
+//   const res = await axios.get(`http://localhost:4000/people/${personId}`);
+//   const person = res.data;
+//
+//   return {
+//     props: {
+//       person
+//     }
+//   };
+// }
 
 export default PublicProfile;

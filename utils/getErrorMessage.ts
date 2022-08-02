@@ -6,6 +6,7 @@ export const getErrorMessage = (catchErrorMessage: string): string => {
       'The email or password you entered is incorrect. Please try again.'
   };
 
+  // @ts-ignore
   let errorMessage = errorMessages[catchErrorMessage];
 
   if (errorMessage === undefined) {

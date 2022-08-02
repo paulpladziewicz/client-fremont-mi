@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { Layout, Events } from 'components';
 import axios from 'axios';
 
+// @ts-ignore
 const EventsPage: NextPage = ({ events }) => {
   return (
     <Layout>
@@ -17,16 +18,16 @@ const EventsPage: NextPage = ({ events }) => {
   );
 };
 
-export async function getStaticProps() {
-  const res = await axios.get('http://localhost:4000/events');
-  const events = res.data.events;
-
-  return {
-    props: {
-      events
-    },
-    revalidate: 60
-  };
-}
+// export async function getStaticProps() {
+//   const res = await axios.get('http://localhost:4000/events');
+//   const events = res.data.events;
+//
+//   return {
+//     props: {
+//       events
+//     },
+//     revalidate: 60
+//   };
+// }
 
 export default EventsPage;

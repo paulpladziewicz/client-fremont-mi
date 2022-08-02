@@ -8,7 +8,6 @@ import { login } from 'redux-toolkit/features/userSlice';
 import { useAppDispatch, useAppSelector } from 'redux-toolkit/hooks';
 import { useRouter } from 'next/router';
 import { getErrorMessage } from '../utils';
-import { setPageLevelMessage } from '../redux-toolkit/features/errorMessageSlice';
 
 const validationSchema = yup.object().shape({
   email: yup

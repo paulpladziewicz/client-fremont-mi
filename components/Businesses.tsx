@@ -21,7 +21,7 @@ export const Businesses: React.FC<Props> = () => {
 
   const content = businesses ? (
     <ul>
-      {businesses.map((business) => (
+      {businesses.map((business: any) => (
         <li key={business.id}>{business.title}</li>
       ))}
     </ul>

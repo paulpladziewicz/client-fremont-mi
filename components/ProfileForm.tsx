@@ -12,10 +12,10 @@ export const ProfileForm: React.FC = () => {
     const { user } = useAppSelector((state) => state.user);
 
   const { data: profile, mutate } = useSWR(
-    `${API_ROUTES.PEOPLE}/${user?.user_id}`,
+    `${API_ROUTES.PEOPLE}/${user?.userId}`,
     () =>
       axios
-        .get(`${API_ROUTES.PEOPLE}/${user?.user_id}`)
+        .get(`${API_ROUTES.PEOPLE}/${user?.userId}`)
         .then((res) => res.data)
         .catch((error) => {
           console.log(error);
@@ -44,7 +44,8 @@ export const ProfileForm: React.FC = () => {
     about: yup.string().required('About is required.'),
   });
 
-  return (
+
+    return (
     <div>
       <div>
         <Formik
@@ -58,8 +59,8 @@ export const ProfileForm: React.FC = () => {
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             axios
-              .put(`${API_ROUTES.PEOPLE}/${user?.user_id}`, {
-                user_id: user?.user_id,
+              .put(`${API_ROUTES.PEOPLE}/${user?.userId}`, {
+                user_id: user?.userId,
                 first_name: data.first_name,
                 last_name: data.last_name,
                 about: data.about,
@@ -93,6 +94,7 @@ export const ProfileForm: React.FC = () => {
                 value={values.first_name}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                  // @ts-ignore
                 error={errors.first_name}
               />
               <Input
@@ -101,6 +103,7 @@ export const ProfileForm: React.FC = () => {
                 value={values.last_name}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                  // @ts-ignore
                 error={errors.last_name}
               />
               <Input
@@ -109,6 +112,7 @@ export const ProfileForm: React.FC = () => {
                 value={values.about}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                  // @ts-ignore
                 error={errors.about}
               />
               <Button

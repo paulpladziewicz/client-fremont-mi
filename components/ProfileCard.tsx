@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 interface Props {
   className?: string;
-  person: object;
+  person: any;
 }
 
 export const ProfileCard: React.FC<Props> = ({ className, person }) => {

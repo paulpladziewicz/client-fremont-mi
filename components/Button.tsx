@@ -4,7 +4,7 @@ interface Props {
   type?: 'submit' | 'button';
   disabled?: boolean;
   className?: string;
-  onClick?: (e: React.MouseEventHandler) => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 export const Button: React.FC<Props> = ({

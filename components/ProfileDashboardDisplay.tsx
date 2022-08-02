@@ -3,11 +3,16 @@ import useSWR from 'swr';
 import { API_ROUTES } from '../constants/apiRoutes';
 import axios from '../lib/axios';
 import { getS3ImageURL } from '../utils';
-import { useGetProfileQuery } from 'redux-toolkit/services/peopleApi';
+// import { useGetProfileQuery } from 'redux-toolkit/services/peopleApi';
 import { useAppSelector } from '../redux-toolkit/hooks';
 import { useRouter } from 'next/router';
 
-export const ProfileDashboardDisplay: React.FC = ({ data: profile }) => {
+interface Props {
+  className?: string;
+  data: any;
+}
+
+export const ProfileDashboardDisplay: React.FC<Props> = ({ data: profile }) => {
   // const user = useAppSelector(state => state.user);
   // if (user.user.userId) {
   //   const { data: profile, error, isLoading } = useGetProfileQuery(user.user.user_id);

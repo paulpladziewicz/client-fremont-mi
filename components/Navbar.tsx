@@ -26,8 +26,8 @@ export const Navbar: React.FC = () => {
     } else {
       return (
         <>
-          <ButtonLink href='/login' text='Login' className='mr-2' />
-          <ButtonLink href='/register' text='Register' />
+          <ButtonLink href='https://fremontmi.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=3r2olb3kdl0k5jcsg4jo57kfr3&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Ffremontmi.com%2Fdashboard' text='Login' className='mr-2' />
+          <ButtonLink href='https://fremontmi.auth.us-east-2.amazoncognito.com/signup?client_id=3r2olb3kdl0k5jcsg4jo57kfr3&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Ffremontmi.com%2Fdashboard' text='Register' />
         </>
       );
     }

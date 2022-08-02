@@ -1,3 +1,4 @@
+// @ts-ignore
 export const SocialIcons = ({ obj }) => {
   return (
     <div className='mb-2 flex justify-center'>
