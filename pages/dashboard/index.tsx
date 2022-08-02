@@ -58,22 +58,22 @@ const Dashboard: NextPage = ({ data: person }) => {
   );
 };
 
-export async function getServerSideProps() {
-  return {
-    props: {
-      data: {
-        user_id: 4,
-        first_name: 'Paul',
-        last_name: 'Pladziewicz',
-        about: 'This is all I am about.',
-        s3_image_pathname: null,
-        facebook_url: null,
-        instagram_url: null,
-        twitter_url: null,
-        linkedin_url: null
-      }
-    }
-  };
-}
+// export async function getServerSideProps() {
+//   return {
+//     props: {
+//       data: {
+//         user_id: 4,
+//         first_name: 'Paul',
+//         last_name: 'Pladziewicz',
+//         about: 'This is all I am about.',
+//         s3_image_pathname: null,
+//         facebook_url: null,
+//         instagram_url: null,
+//         twitter_url: null,
+//         linkedin_url: null
+//       }
+//     }
+//   };
+// }
 
 export default Dashboard;
