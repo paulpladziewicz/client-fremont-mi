@@ -1,8 +1,14 @@
-import getCognitoURL from "../utils/getCognitoURL";
-const API_BASE_URLS: {[key: string]: string} = {
-  'localhost': 'https://5hc3ya79b7.execute-api.us-east-2.amazonaws.com/Dev'
-}
+const BASE_URL = 'http://localhost:4000';
 
-const API_BASE_URL = API_BASE_URLS[getCognitoURL()];
-
-export const API_ROUTES = {};
+export const API_ROUTES = {
+  USER: BASE_URL + '/user',
+  // LOGIN: '/api/login',
+  // LOGOUT: '/api/logout',
+  // REGISTER: '/api/register',
+  // PUBLISH: 'api/people/publish',
+  PEOPLE: BASE_URL + '/profile',
+  PROFILE_IMAGE: BASE_URL + '/profile/image',
+  // FORGOT_PASSWORD: '/api/forgot-password',
+  // RESET_PASSWORD: '/api/reset-password',
+  // EMAIL_VERIFICATION: '/api/email/verification-notification'
+};

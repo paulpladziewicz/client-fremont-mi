@@ -1,10 +1,6 @@
 import styles from 'styles/Navbar.module.css';
-import { Button, ButtonLink, Logo } from 'components';
+import {  ButtonLink, Logo } from 'components';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { logout } from 'redux-toolkit/features/userSlice';
-import { useAppDispatch, useAppSelector } from 'redux-toolkit/hooks';
-import {COGNITO_AUTH_URLS} from "../constants/apiRoutes";
 import {useEffect, useState} from "react";
 import getCognitoURL from "../utils/getCognitoURL";
 
