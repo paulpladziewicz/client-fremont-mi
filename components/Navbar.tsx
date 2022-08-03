@@ -4,34 +4,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { logout } from 'redux-toolkit/features/userSlice';
 import { useAppDispatch, useAppSelector } from 'redux-toolkit/hooks';
+import {COGNITO_AUTH_URLS} from "../constants/apiRoutes";
+import {useEffect, useState} from "react";
+import getCognitoURL from "../utils/getCognitoURL";
 
 export const Navbar: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const { isLoggedIn } = useAppSelector((state) => state.user);
+    const [hostname, setHostname] = useState('localhost');
 
-  const handleLogout = async () => {
-    await dispatch(logout());
-    localStorage.removeItem('token');
-    await router.push('/');
-  };
-  const renderAuthButtons = () => {
-    if (isLoggedIn) {
-      return (
-        <>
-          <ButtonLink href='/dashboard' text='Dashboard' className='mr-2' />
-          <Button onClick={handleLogout} text='Logout' />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <ButtonLink href='https://fremontmi.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=3r2olb3kdl0k5jcsg4jo57kfr3&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Ffremontmi.com%2Fdashboard' text='Login' className='mr-2' />
-          <ButtonLink href='https://fremontmi.auth.us-east-2.amazoncognito.com/signup?client_id=3r2olb3kdl0k5jcsg4jo57kfr3&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Ffremontmi.com%2Fdashboard' text='Register' />
-        </>
-      );
-    }
-  };
+    useEffect(() => {
+       setHostname(window.location.hostname);
+    }, [])
 
   return (
     <nav className={styles.nav}>
@@ -57,7 +39,11 @@ export const Navbar: React.FC = () => {
           </a>
         </Link>
       </ul>
-      <ul>{renderAuthButtons()}</ul>
+      <ul>
+          <ButtonLink href={getCognitoURL(hostname).login} text='Login' className='mr-2' />
+          <ButtonLink href={getCognitoURL(hostname).logout} text='Logout' />
+          <ButtonLink href={getCognitoURL(hostname).register} text='Register' />
+      </ul>
     </nav>
   );
 };
