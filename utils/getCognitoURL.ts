@@ -17,8 +17,8 @@ const COGNITO_REDIRECT_URIS: {[key: string]: A} = {
     DASHBOARD: 'http%3A%2F%2Flocalhost:3000%2Fdashboard'
     },
     'www.fremontmi.com':  {
-        HOME: 'http%3A%2F%2Flocalhost:3000',
-        DASHBOARD: 'http%3A%2F%2Flocalhost:3000%2Fdashboard'
+        HOME: 'https%3A%2F%2Ffremontmi.com',
+        DASHBOARD: 'https%3A%2F%2Ffremontmi.com%2Fdashboard'
     },
 }
 
